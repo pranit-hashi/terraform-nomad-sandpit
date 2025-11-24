@@ -6,7 +6,7 @@ sudo cat << EOF > /etc/systemd/system/${NAME}.service
 Description=${NAME}
 
 [Service]
-ExecStart=/opt/nomad/bin/${NAME} agent -config-dir /opt/nomad/config/
+ExecStart=/opt/nomad/bin/${NAME} agent -config /opt/nomad/config/
 User=nomad
 Group=nomad
 LimitMEMLOCK=infinity
