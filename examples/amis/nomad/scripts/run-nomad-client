@@ -6,12 +6,18 @@ sudo cat << EOF > /etc/systemd/system/${NAME}.service
 Description=${NAME}
 
 [Service]
-ExecStart=/opt/nomad/bin/${NAME} agent -config /opt/nomad/config/
 User=root
 Group=root
-LimitMEMLOCK=infinity
-Capabilities=CAP_IPC_LOCK+ep
-CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStart=/opt/nomad/bin/${NAME} agent -config /opt/nomad/config/
+KillMode=process
+KillSignal=SIGINT
+LimitNOFILE=65536
+LimitNPROC=infinity
+Restart=on-failure
+RestartSec=2
+TasksMax=infinity
+OOMScoreAdjust=-1000
 
 [Install]
 WantedBy=multi-user.target
