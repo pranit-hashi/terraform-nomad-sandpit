@@ -47,6 +47,8 @@ data "aws_subnets" "private" {
 }
 
 resource "aws_instance" "nomad-client" {
+  count = 4
+  
   ami                  = data.aws_ami.nomad.id
   instance_type        = "t2.large"
   iam_instance_profile = aws_iam_instance_profile.nomad-join.name
@@ -63,7 +65,7 @@ resource "aws_instance" "nomad-client" {
   }
 
   connection {
-    host          = aws_instance.nomad-client.private_dns
+    host          = self.private_dns
     user          = "ubuntu"
     agent         = false
     private_key   = var.key_pair_private_key
