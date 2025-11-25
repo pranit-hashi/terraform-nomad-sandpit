@@ -7,8 +7,8 @@ Description=${NAME}
 
 [Service]
 ExecStart=/opt/nomad/bin/${NAME} agent -config /opt/nomad/config/
-# User=root
-# Group=root
+User=root
+Group=root
 LimitMEMLOCK=infinity
 Capabilities=CAP_IPC_LOCK+ep
 CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
