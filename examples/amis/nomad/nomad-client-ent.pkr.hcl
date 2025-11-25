@@ -37,14 +37,15 @@ data "amazon-ami" "ubuntu20" {
 
 source "amazon-ebs" "ubuntu20-ami" {
   ami_description             = "An Ubuntu 20.04 AMI that has Nomad installed."
-  ami_name                    = "nomad-ubuntu-${formatdate("YYYYMMDDhhmm", timestamp())}"
+  ami_name                    = "nomad-client-ubuntu-${formatdate("YYYYMMDDhhmm", timestamp())}"
   associate_public_ip_address = true
   instance_type               = "t2.micro"
   region                      = "${var.aws_region}"
+  ami_regions                  = ["ap-southeast-2", "ap-southeast-1"]
   source_ami                  = "${data.amazon-ami.ubuntu20.id}"
   ssh_username                = "ubuntu"
   tags = {
-    application     = "nomad"
+    application     = "nomad-client"
     nomad_version  = "${var.nomad_version}"
     owner           = "tphan@hashicorp.com"
     packer_source   = "https://github.com/phan-t/terraform-nomad-sandpit/blob/master/examples/amis/nomad-enterprise/nomad-ent.pkr.hcl"
