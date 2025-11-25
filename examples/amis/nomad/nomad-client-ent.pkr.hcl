@@ -19,7 +19,7 @@ variable "nomad_download_url" {
 
 variable "nomad_user" {
   type    = string
-  default = "nomad"
+  default = "root"
 }
 
 data "amazon-ami" "ubuntu20" {
@@ -64,7 +64,7 @@ build {
   }
 
   provisioner "shell" {
-    inline       = ["if test -n \"${var.nomad_download_url}\"; then", "/tmp/terraform-nomad-sandpit/examples/amis/nomad/scripts/install-nomad --user ${var.nomad_user} --download-url ${var.nomad_download_url};", "else", "/tmp/terraform-nomad-sandpit/examples/amis/nomad/scripts/install-nomad --user ${var.nomad_user} --version ${var.nomad_version};", "fi"]
+    inline       = ["if test -n \"${var.nomad_download_url}\"; then", "/tmp/terraform-nomad-sandpit/examples/amis/nomad/scripts/install-nomad-client --user ${var.nomad_user} --download-url ${var.nomad_download_url};", "else", "/tmp/terraform-nomad-sandpit/examples/amis/nomad/scripts/install-nomad-client --user ${var.nomad_user} --version ${var.nomad_version};", "fi"]
     pause_before = "30s"
   }
 }
