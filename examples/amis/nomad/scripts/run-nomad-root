@@ -1,0 +1,26 @@
+# Installs the Nomad as a service for systemd on linux
+NAME=nomad
+
+sudo cat << EOF > /etc/systemd/system/${NAME}.service
+[Unit]
+Description=${NAME}
+
+[Service]
+ExecStart=/opt/nomad/bin/${NAME} agent -config /opt/nomad/config/
+User=root
+Group=root
+LimitMEMLOCK=infinity
+Capabilities=CAP_IPC_LOCK+ep
+CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Change owner of Nomad config
+sudo chown root:root /opt/nomad/config/config.hcl
+
+sudo chmod 664 /etc/systemd/system/${NAME}.service
+sudo systemctl daemon-reload
+sudo systemctl enable ${NAME}
+sudo systemctl start ${NAME}
