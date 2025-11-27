@@ -37,6 +37,7 @@ variable "aws_region_2" {
 variable "aws_route53_sandbox_prefix" {
   description = "aws route53 sandbox account prefix"
   type        = string
+  default     = "pranit-raje"
 }
 
 # hashicorp enterprise server variables
@@ -44,4 +45,5 @@ variable "aws_route53_sandbox_prefix" {
 variable "nomad_ent_license" {
   description = "nomad enterprise license"
   type        = string
+  default     = ""
 }
